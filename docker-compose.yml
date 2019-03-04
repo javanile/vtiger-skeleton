@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  vtiger:
+    build:
+      context: .
+      target: development
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '30080:80'
+    links:
+      - mysql
+    restart: 'no'
+
+  mysql:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./var/mysql:/var/lib/mysql:rw
+    restart: 'no'
