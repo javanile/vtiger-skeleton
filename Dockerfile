@@ -1,3 +1,6 @@
-FROM javanile/vtiger:7.1
+FROM javanile/vtiger:latest AS development
+
+
+
 
 

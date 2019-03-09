@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
 
@@ -10,14 +10,22 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     ports:
       - '30080:80'
+    volumes:
+      - ./:/app
     links:
       - mysql
-    restart: 'no'
 
   mysql:
     image: mysql:5.5
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./var/mysql:/var/lib/mysql:rw
-    restart: 'no'
+      - mysql:/var/lib/mysql:rw
+
+  backup:
+    image: javanile/backup
+    volumes:
+      - './backup:/backup/backup'
+
+volumes:
+  mysql:

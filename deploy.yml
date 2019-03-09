@@ -1,0 +1,22 @@
+---
+- hosts: Agency
+  tasks:
+  - name: Clone Codebase
+    git:
+      repo: https://github.com/javanile/agency
+      dest:
+      version: master
+      force: yes
+  - name: Update Environment
+    copy:
+      dest: agency/.env
+      content: |
+        HTTP_PORT={{http_port}}
+        ADMIN_EMAIL={{admin_email}}
+        GMAIL_USER={{gmail_user}}
+        GMAIL_PASSWORD={{gmail_password}}
+  - name: Start Services
+    become: yes
+    shell:
+      cmd: docker-compose down --remove-orphans && docker-compose up -d --force-recreate
+      chdir: agency
